@@ -16,5 +16,5 @@ data class Tag(
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "tags")
     @JsonIgnoreProperties("tags")
-    var books: Set<Book> = mutableSetOf()
+    var books: List<Book> = mutableListOf()
 )

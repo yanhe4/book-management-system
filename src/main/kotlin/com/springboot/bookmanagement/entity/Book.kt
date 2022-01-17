@@ -22,7 +22,7 @@ data class Book(
         joinColumns = [ JoinColumn(name = "book_id") ],
         inverseJoinColumns = [ JoinColumn(name = "tag_id") ])
     @JsonIgnoreProperties("books")
-    var tags: Set<Tag> = mutableSetOf()
+    var tags: List<Tag> = mutableListOf()
 )
 
 enum class Status {

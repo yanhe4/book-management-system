@@ -20,4 +20,12 @@ class BookService {
     fun deleteBookById(bookId: Long) {
         TODO("Not yet implemented")
     }
+
+    fun addTagToBook(bookId: Long, tagId: Long): Book {
+        TODO("Not yet implemented")
+    }
+
+    fun removeTagFromBook(bookId: Long, tagId: Long): Book {
+        TODO("Not yet implemented")
+    }
 }
