@@ -1,10 +1,9 @@
 package com.springboot.bookmanagement.entity
 
-import javax.persistence.Column
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
+@Entity
+@Table(name = "usr")
 data class User(
 //    User: id, userName, password, role
 
@@ -13,6 +12,7 @@ data class User(
     @Column(name = "user_name")
     var userName: String,
     var password: String,
+    @Enumerated(EnumType.STRING)
     var role: Role
 )
 
