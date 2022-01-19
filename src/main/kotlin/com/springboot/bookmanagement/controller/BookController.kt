@@ -1,12 +1,13 @@
 package com.springboot.bookmanagement.controller
 
+import com.springboot.bookmanagement.dto.BookDto
 import com.springboot.bookmanagement.entity.Book
-import com.springboot.bookmanagement.service.impl.BookService
+import com.springboot.bookmanagement.service.impl.BookServiceImpl
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/books")
-class BookController(private val bookService: BookService) {
+class BookController(private val bookService: BookServiceImpl) {
 
     @GetMapping
     fun listBooks(
@@ -21,7 +22,7 @@ class BookController(private val bookService: BookService) {
     fun getBookById(@PathVariable("id") bookId: Long): Book = bookService.getBookById(bookId)
 
     @PostMapping
-    fun createBook(@RequestBody bookCreateRequest: Book): Book = bookService.createBook(bookCreateRequest)
+    fun createBook(@RequestBody bookCreateRequest: BookDto): BookDto = bookService.createBook(bookCreateRequest)
 
     @PutMapping("/{id}")
     fun updateBookById(@PathVariable("id") bookId: Long, @RequestBody bookUpdateRequest: Book): Book =

@@ -1,6 +1,7 @@
 package com.springboot.bookmanagement.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.springboot.bookmanagement.dto.BookDto
 import javax.persistence.*
 
 @Entity
@@ -28,3 +29,11 @@ data class Book(
 enum class Status {
     AVAILABLE, CHECKED_OUT
 }
+
+fun Book.toBookDto() = BookDto(
+    id = id,
+    title = title,
+    author = author,
+    status = status,
+    tags = tags
+)
