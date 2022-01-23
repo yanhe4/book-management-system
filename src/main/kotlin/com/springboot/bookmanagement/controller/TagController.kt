@@ -1,12 +1,15 @@
 package com.springboot.bookmanagement.controller
 
+import com.springboot.bookmanagement.controller.dto.TagDto
+import com.springboot.bookmanagement.controller.dto.fromModel
+import com.springboot.bookmanagement.controller.dto.toModel
 import com.springboot.bookmanagement.repository.entity.Tag
-import com.springboot.bookmanagement.service.impl.TagService
+import com.springboot.bookmanagement.service.impl.TagServiceImpl
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/tags")
-class TagController(private val tagService: TagService) {
+class TagController(private val tagService: TagServiceImpl) {
 
     @GetMapping
     fun listTags(
@@ -18,14 +21,20 @@ class TagController(private val tagService: TagService) {
     }
 
     @GetMapping("/{tagId}")
-    fun getTagById(@PathVariable("tagId") tagId: Long): Tag = tagService.getTagById(tagId)
+    fun getTagById(@PathVariable("tagId") tagId: Long): TagDto = tagService.getTagById(tagId).fromModel()
 
     @PostMapping
-    fun createTag(@RequestBody tagCreateRequest: Tag): Tag = tagService.createTag(tagCreateRequest)
+    fun createTag(@RequestBody tagCreateRequest: TagDto): TagDto {
+        val tagModel = tagCreateRequest.toModel()
+        val createTag = tagService.createTag(tagModel)
+        return createTag.fromModel()
+    }
 
     @PutMapping("/{tagId}")
-    fun updateTagById(@PathVariable("tagId") tagId: Long, @RequestBody tagUpdateRequest: Tag): Tag =
-        tagService.updateTagById(tagId, tagUpdateRequest)
+    fun updateTagById(@PathVariable("tagId") tagId: Long, @RequestBody tagUpdateRequest: TagDto): TagDto {
+        val tagModel = tagUpdateRequest.toModel()
+        return tagService.updateTagById(tagId, tagModel).fromModel()
+    }
 
     @DeleteMapping("/{tagId}")
     fun deleteTagById(@PathVariable("tagId") tagId: Long): Unit = tagService.deleteTagById(tagId)
@@ -38,12 +47,4 @@ class TagController(private val tagService: TagService) {
     ): List<Tag> {
         return emptyList()
     }
-
-    @PutMapping("/{tagId}/books/{id}")
-    fun addBookUnderTag(@PathVariable("tagId") tagId: Long, @PathVariable("id") bookId: Long): Tag =
-        tagService.addBookUnderTag(tagId, bookId)
-
-    @DeleteMapping("/{tagId}/books/{id}")
-    fun removeBookUnderTag(@PathVariable tagId: Long, @PathVariable("id") bookId: Long): Tag =
-        tagService.removeBookUnderTag(tagId, bookId)
 }
