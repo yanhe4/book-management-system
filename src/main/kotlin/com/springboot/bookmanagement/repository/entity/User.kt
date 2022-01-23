@@ -1,4 +1,4 @@
-package com.springboot.bookmanagement.entity
+package com.springboot.bookmanagement.repository.entity
 
 import javax.persistence.*
 

@@ -1,7 +1,6 @@
-package com.springboot.bookmanagement.entity
+package com.springboot.bookmanagement.repository.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.springboot.bookmanagement.dto.BookDto
 import javax.persistence.*
 
 @Entity
@@ -17,23 +16,15 @@ data class Book(
     @Enumerated(EnumType.STRING)
     var status: Status,
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.MERGE])
     @JoinTable(
         name = "book_tag",
         joinColumns = [ JoinColumn(name = "book_id") ],
         inverseJoinColumns = [ JoinColumn(name = "tag_id") ])
     @JsonIgnoreProperties("books")
-    var tags: List<Tag> = mutableListOf()
+    var tags: MutableList<Tag> = mutableListOf()
 )
 
 enum class Status {
     AVAILABLE, CHECKED_OUT
 }
-
-fun Book.toBookDto() = BookDto(
-    id = id,
-    title = title,
-    author = author,
-    status = status,
-    tags = tags
-)

@@ -1,4 +1,4 @@
-package com.springboot.bookmanagement.entity
+package com.springboot.bookmanagement.repository.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import javax.persistence.*
@@ -14,7 +14,7 @@ data class Tag(
     var tagName: String,
     var description: String,
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "tags")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tags")
     @JsonIgnoreProperties("tags")
-    var books: List<Book> = mutableListOf()
+    var books: MutableList<Book> = mutableListOf()
 )

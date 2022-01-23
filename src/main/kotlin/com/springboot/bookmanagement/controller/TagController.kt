@@ -1,6 +1,6 @@
 package com.springboot.bookmanagement.controller
 
-import com.springboot.bookmanagement.entity.Tag
+import com.springboot.bookmanagement.repository.entity.Tag
 import com.springboot.bookmanagement.service.impl.TagService
 import org.springframework.web.bind.annotation.*
 

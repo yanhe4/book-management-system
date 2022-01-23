@@ -1,6 +1,6 @@
 package com.springboot.bookmanagement.controller
 
-import com.springboot.bookmanagement.entity.User
+import com.springboot.bookmanagement.repository.entity.User
 import com.springboot.bookmanagement.service.impl.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

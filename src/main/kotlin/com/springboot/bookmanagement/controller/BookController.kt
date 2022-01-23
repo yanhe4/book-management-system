@@ -1,8 +1,11 @@
 package com.springboot.bookmanagement.controller
 
-import com.springboot.bookmanagement.dto.BookDto
-import com.springboot.bookmanagement.entity.Book
+import com.springboot.bookmanagement.controller.dto.BookDto
+import com.springboot.bookmanagement.controller.dto.fromModel
+import com.springboot.bookmanagement.controller.dto.toModel
+import com.springboot.bookmanagement.repository.entity.Book
 import com.springboot.bookmanagement.service.impl.BookServiceImpl
+import com.springboot.bookmanagement.service.model.fromEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -19,14 +22,22 @@ class BookController(private val bookService: BookServiceImpl) {
     }
 
     @GetMapping("/{id}")
-    fun getBookById(@PathVariable("id") bookId: Long): Book = bookService.getBookById(bookId)
+    fun getBookById(@PathVariable("id") bookId: Long): BookDto {
+        return bookService.getBookById(bookId).fromModel()
+    }
 
     @PostMapping
-    fun createBook(@RequestBody bookCreateRequest: BookDto): BookDto = bookService.createBook(bookCreateRequest)
+    fun createBook(@RequestBody bookCreateRequest: BookDto): BookDto {
+        val bookModel = bookCreateRequest.toModel()
+        val createBook = bookService.createBook(bookModel)
+        return createBook.fromModel()
+    }
 
     @PutMapping("/{id}")
-    fun updateBookById(@PathVariable("id") bookId: Long, @RequestBody bookUpdateRequest: Book): Book =
-        bookService.updateBookById(bookId, bookUpdateRequest)
+    fun updateBookById(@PathVariable("id") bookId: Long, @RequestBody bookUpdateRequest: BookDto): BookDto {
+        val bookModel = bookUpdateRequest.toModel()
+        return bookService.updateBookById(bookId, bookModel).fromModel()
+    }
 
     @DeleteMapping("/{id}")
     fun deleteBookById(@PathVariable("id") bookId: Long): Unit = bookService.deleteBookById(bookId)
@@ -41,10 +52,12 @@ class BookController(private val bookService: BookServiceImpl) {
     }
 
     @PutMapping("/{id}/tags/{tagId}")
-    fun addTagToBook(@PathVariable("id") bookId: Long, @PathVariable("tagId") tagId: Long): Book =
-        bookService.addTagToBook(bookId, tagId)
+    fun addTagToBook(@PathVariable("id") bookId: Long, @PathVariable("tagId") tagId: Long): BookDto {
+        return bookService.addTagToBook(bookId, tagId).fromModel()
+    }
 
     @DeleteMapping("/{id}/tags/{tagId}")
-    fun removeTagFromBook(@PathVariable("id") bookId: Long, @PathVariable tagId: Long): Book =
-        bookService.removeTagFromBook(bookId, tagId)
+    fun removeTagFromBook(@PathVariable("id") bookId: Long, @PathVariable tagId: Long): BookDto {
+        return bookService.removeTagFromBook(bookId, tagId).fromModel()
+    }
 }

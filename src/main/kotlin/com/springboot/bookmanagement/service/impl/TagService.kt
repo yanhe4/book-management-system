@@ -1,6 +1,6 @@
 package com.springboot.bookmanagement.service.impl
 
-import com.springboot.bookmanagement.entity.Tag
+import com.springboot.bookmanagement.repository.entity.Tag
 import org.springframework.stereotype.Service
 
 @Service
