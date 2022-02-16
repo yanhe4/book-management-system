@@ -8,6 +8,9 @@ import com.springboot.bookmanagement.repository.TagRepository
 import com.springboot.bookmanagement.repository.entity.Tag
 import com.springboot.bookmanagement.service.BookService
 import com.springboot.bookmanagement.service.model.fromEntity
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 
 @Service
@@ -70,8 +73,10 @@ class BookServiceImpl(private val bookRepository: BookRepository, private val ta
         return bookRepository.save(book).fromEntity()
     }
 
-    override fun listBooks(): List<BookModel> {
-        val books: List<Book> = bookRepository.findAll()
-        return books.map { book -> book.fromEntity() }
+    override fun listBooks(pageNo: Int, pageSize: Int): List<BookModel> {
+        val pageable: Pageable = PageRequest.of(pageNo, pageSize)
+        val books: Page<Book> = bookRepository.findAll(pageable)
+        val listOfBooks: List<Book> = books.content
+        return listOfBooks.map { book -> book.fromEntity() }
     }
 }

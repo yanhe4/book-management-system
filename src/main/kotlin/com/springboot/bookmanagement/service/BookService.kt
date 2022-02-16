@@ -10,7 +10,7 @@ interface BookService {
 
     fun updateBookById(bookId: Long, bookModel: BookModel): BookModel
 
-    fun listBooks(): List<BookModel>
+    fun listBooks(pageNo: Int, pageSize: Int): List<BookModel>
 
     fun deleteBookById(bookId: Long)
 

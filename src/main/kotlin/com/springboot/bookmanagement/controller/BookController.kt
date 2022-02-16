@@ -5,7 +5,6 @@ import com.springboot.bookmanagement.controller.dto.fromModel
 import com.springboot.bookmanagement.controller.dto.toModel
 import com.springboot.bookmanagement.repository.entity.Book
 import com.springboot.bookmanagement.service.impl.BookServiceImpl
-import com.springboot.bookmanagement.service.model.fromEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -14,11 +13,10 @@ class BookController(private val bookService: BookServiceImpl) {
 
     @GetMapping
     fun listBooks(
-        @RequestParam(defaultValue = "1") page: Int,
-        @RequestParam(defaultValue = "10") size: Int,
-        @RequestParam(name = "title", required = false) title: String
-    ): List<Book> {
-        return emptyList()
+            @RequestParam(value = "pageNo", defaultValue = "1", required = false) pageNo: Int,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) pageSize: Int,
+    ): List<BookDto> {
+        return bookService.listBooks(pageNo, pageSize).map { book -> book.fromModel() }
     }
 
     @GetMapping("/{id}")
